@@ -20,8 +20,8 @@ __all__ = [
     "Fisk",
     "Gamma",
     "GeneralizedPareto",
-    "LogGamma",
     "Geometric",
+    "Gompertz",
     "GumbelL",
     "GumbelR",
     "HalfCauchy",
@@ -37,12 +37,14 @@ __all__ = [
     "LeftTruncated",
     "Levy",
     "Logistic",
+    "LogGamma",
     "LogLaplace",
     "LogNormal",
     "MeanScale",
     "Mixture",
     "NegativeBinomial",
     "Normal",
+    "NormalMixture",
     "Pareto",
     "Poisson",
     "QPD_Empirical",
@@ -50,6 +52,7 @@ __all__ = [
     "QPD_B",
     "QPD_U",
     "QPD_Johnson",
+    "Rayleigh",
     "Skellam",
     "SkewNormal",
     "TDistribution",
@@ -81,6 +84,7 @@ from skpro.distributions.fisk import Fisk
 from skpro.distributions.gamma import Gamma
 from skpro.distributions.gen_pareto import GeneralizedPareto
 from skpro.distributions.geometric import Geometric
+from skpro.distributions.gompertz import Gompertz
 from skpro.distributions.gumbel_l import GumbelL
 from skpro.distributions.gumbel_r import GumbelR
 from skpro.distributions.halfcauchy import HalfCauchy
@@ -102,10 +106,12 @@ from skpro.distributions.meanscale import MeanScale
 from skpro.distributions.mixture import Mixture
 from skpro.distributions.negative_binomial import NegativeBinomial
 from skpro.distributions.normal import Normal
+from skpro.distributions.normal_mixture import NormalMixture
 from skpro.distributions.pareto import Pareto
 from skpro.distributions.poisson import Poisson
 from skpro.distributions.qpd import QPD_B, QPD_S, QPD_U, QPD_Johnson
 from skpro.distributions.qpd_empirical import QPD_Empirical
+from skpro.distributions.rayleigh import Rayleigh
 from skpro.distributions.skellam import Skellam
 from skpro.distributions.skew_normal import SkewNormal
 from skpro.distributions.t import TDistribution
