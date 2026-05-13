@@ -1,8 +1,10 @@
 """Tests for the XGBoostLSS regressor."""
 
+import numpy as np
 import pandas as pd
 import pytest
 
+from skpro.distributions import NegativeBinomial
 from skpro.regression.xgboostlss import XGBoostLSS
 from skpro.tests.test_switch import run_test_for_class
 
@@ -68,3 +70,33 @@ def test_xgboostlss_param_handling(params, expected_xgb_params, should_error):
 
         for key, value in expected_xgb_params.items():
             assert reg.xgb_params_.get(key) == value
+
+
+@pytest.mark.skipif(
+    not run_test_for_class(XGBoostLSS),
+    reason="run test only if softdeps are present and incrementally (if requested)",
+)
+def test_xgboostlss_negative_binomial_support():
+    """Test NegativeBinomial distribution support in XGBoostLSS."""
+    rng = np.random.default_rng(0)
+
+    X = pd.DataFrame(rng.normal(size=(80, 3)), columns=["a", "b", "c"])
+    mean = np.exp(0.4 * X["a"] - 0.3 * X["b"] + 0.2)
+    y = pd.DataFrame(rng.poisson(mean).astype(int), columns=["y"])
+
+    reg = XGBoostLSS(
+        dist="NegativeBinomial",
+        n_trials=0,
+        num_boost_round=5,
+        n_cpu=1,
+    )
+    reg.fit(X, y)
+
+    y_pred = reg.predict_proba(X.head(10))
+    y_mean = y_pred.mean()
+    y_var = y_pred.var()
+
+    assert isinstance(y_pred, NegativeBinomial)
+    assert y_pred.shape == (10, 1)
+    assert y_mean.ge(0).all().all()
+    assert y_var.ge(y_mean).all().all()
